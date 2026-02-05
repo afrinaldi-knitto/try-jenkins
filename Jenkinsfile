@@ -6,7 +6,7 @@ pipeline {
     CONTAINER_NAME = "try-jenkins"
     APP_PORT = "3000"
     BRANCH = "master"
-    REPO_URL = "https://github.com/afrinaldi-knitto/try-jenkins"
+    REPO_URL = "https://github.com/afrinaldi-knitto/try-jenkins.git"
   }
 
   stages {

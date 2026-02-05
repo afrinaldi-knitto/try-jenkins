@@ -5,29 +5,25 @@ pipeline {
     IMAGE_NAME = "try-jenkins"
     CONTAINER_NAME = "try-jenkins"
     APP_PORT = "3000"
-  }
-
-  triggers {
-    githubPush()
+    BRANCH = "master"
+    REPO_URL = "https://github.com/afrinaldi-knitto/try-jenkins"
   }
 
   stages {
 
-    stage("Checkout") {
+    stage("Checkout Code") {
       steps {
-        checkout scm
+        git branch: "${BRANCH}", url: "${REPO_URL}"
       }
     }
 
     stage("Build Docker Image") {
       steps {
-        sh """
-          docker build -t ${IMAGE_NAME}:latest .
-        """
+        sh "docker build -t ${IMAGE_NAME}:latest ."
       }
     }
 
-    stage("Deploy") {
+    stage("Deploy Container") {
       steps {
         sh """
           docker stop ${CONTAINER_NAME} || true
@@ -45,7 +41,7 @@ pipeline {
 
   post {
     success {
-      echo "✅ Deployment successful"
+      echo "✅ Manual deployment successful"
     }
     failure {
       echo "❌ Deployment failed"
